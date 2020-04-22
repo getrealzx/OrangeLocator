@@ -30,7 +30,7 @@ export default function HomeScreen() {
           </View>
 
           <Text style={styles.getStartedText}>
-            Change any of the text, save the file, and your app will automatically reload. SEAN ALINA diego
+            Change any of the text, save the file, and your app will automatically reload. SEAN, ALINA, Richard and Diego.
           </Text>
         </View>
 
