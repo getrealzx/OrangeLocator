@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "orangesard",
+    "database": "postgres",
+    "host": "dc-capstone-sard.cfzhtbwqircy.us-east-2.rds.amazonaws.com",
+    "dialect": "postgres"
+    
+  },
+  "test": {
+    "username": "postgres",
+    "password": "orangesard",
+    "database": "postgres",
+    "host": "dc-capstone-sard.cfzhtbwqircy.us-east-2.rds.amazonaws.com",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "orangesard",
+    "database": "postgres",
+    "host": "dc-capstone-sard.cfzhtbwqircy.us-east-2.rds.amazonaws.com",
+    "dialect": "postgres"
+  
+  }
+}
