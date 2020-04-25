@@ -4,9 +4,10 @@ import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import SignupScreen from '../screens/SignupScreen';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'Signup';
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -32,6 +33,14 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
         }}
       />
+      <BottomTab.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{
+          title: 'Sign Up',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-profile" />,
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -44,5 +53,7 @@ function getHeaderTitle(route) {
       return 'How to get started';
     case 'Links':
       return 'Links to learn more';
+    case 'Signup':
+      return 'Sign Up'
   }
 }
