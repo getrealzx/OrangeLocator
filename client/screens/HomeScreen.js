@@ -5,16 +5,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 
-export default class HomeScreen extends React.Component{
+import MapView from 'react-native-maps';
+
+export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
       data: [
-      
 
-        ],
-      key:"hello world"
+
+      ],
+      key: "hello world"
     }
   }
 
@@ -22,6 +24,7 @@ export default class HomeScreen extends React.Component{
   // 
   componentDidMount() {
     // fetch('http://YourLAN_IP:3001/api')
+    // fetch('http://192.168.31.43:3001/api')
     fetch('/api')
       .then(results => results.json())
       .then(data => {
@@ -31,6 +34,8 @@ export default class HomeScreen extends React.Component{
         })
       })
   }
+
+
 
   render() {
 
@@ -60,10 +65,17 @@ export default class HomeScreen extends React.Component{
             </View>
 
             <Text style={styles.getStartedText}>
-              Change any of the text, save the file, and your app will automatically reload. SEAN ALINA diego
-         
-              {this.state.data[0]?this.state.data[0].username:null}
-          </Text>
+            T1
+            </Text>
+            <View>
+              <Text>
+                Data Here Well: Hello Emmy Test Here
+                {this.state.data[0] ? this.state.data[0].username : null}
+                {this.state.data[1] ? this.state.data[1].username : null}
+
+              </Text>
+            </View>
+
           </View>
 
           <View style={styles.helpContainer}>
@@ -209,4 +221,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  map:{
+    height:300
+  }
 });
