@@ -65,6 +65,7 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <Text style={styles.getStartedText}>
+
             T1
             </Text>
             <View>

@@ -1,0 +1,111 @@
+
+
+
+This tutorial divided into several steps:
+Step #1: Install React Native CLI and Create App
+Step #2: Install react-native-qrcode-scanner Library
+Step #3: Implementing the QRCode Scanner
+Step #4: Run and Test the React Native QRCode Scanner
+
+The following tools, frameworks, and modules are required for this tutorial:
+
+> React Native
+> Node.js (NPM or Yarn)
+> react-native-qrcode-scanner
+> Android Studio or SDK for Android
+> XCode for iOS
+> Terminal (OSX/Linux) or Node Command Line (Windows)
+> Text Editor or IDE (We are using VSCode)
+
+Before start to the main steps, make sure that you have installed Node.js and can run NPM or Yarn in the terminal or command line. 
+To check the existing or installed Node.js environment open the terminal/command line then type this command.
+
+To check Node type
+node -v
+
+To check NPM type
+npm -v
+
+to check yarn
+yarn - v
+
+~~~~~~~~~
+
+Step #1: Install React Native CLI and Create App
+For this React Native tutorial, we will use React Native CLI to create a React Native app. To install it, type this command in your App projects folder.
+
+sudo npm install -g react-native-cli
+Now, we have "react-native-cli@2.0.1" for this tutorial. Next, create a React Native App using this command from your project directory.
+
+react-native init ReactNativeQrcode
+Next, go to the newly created React App folder and run the React Native app to the iOS simulator.
+
+cd ReactNativeQrcode && npx react-native run-ios
+Or run to the Android device/emulator.
+
+cd ReactNativeQrcode && npx react-native run-android
+When a new terminal window opened, go to the React Native project folder then run the Metro bundler server.
+
+cd ~/Apps/ReactNativeQrcode && yarn start
+Now, you will see this in the iOS simulator.
+
+~~~~~~~~~~
+
+Step #2: Install react-native-qrcode-scanner Library
+
+yarn add react-native-camera
+react-native link react-native-camera
+yarn add react-native-qrcode-scanner
+yarn add react-native-permissions
+react-native link react-native-qrcode-scanner
+react-native link react-native-permissions
+
+
+
+Sources: 
+
+Didin J. (April 1, 2020) DJAMware.com.  React Native Tutorial: QRCode Scanner App for Android or iOS. Retrieved from 
+https://www.djamware.com/post/5e83f1e7344bef67e448798c/react-native-tutorial-qrcode-scanner-app-for-android-or-ios
+
+DJamware Tutorial (April 15, 2020) YouTube. React Native Tutorial: QRCode Scanner App for Android or iOS. Retrieved from
+https://www.youtube.com/watch?time_continue=1&v=Z0RP7X8UbbQ&feature=emb_logo
+
+Didn J. (April, 2020) Didinj/react-native-qrcode-scanner-example Retrieved from
+https://github.com/didinj/react-native-qrcode-scanner-example
+
+Bassam Seif (Aug, 2019) Build a QR Scanner: A React Native Camera Tutorial. (Note: Use this to add ALL of the needed PERMISSIONS.) Retrieved from
+https://www.toptal.com/react-native/react-native-camera-tutorial
+
+How To Tech (April, 17, 2017) YouTube. HOW TO ANDROID: Install ADB & Fastboot on Your Mac - The EASIEST & SAFEST Way - Permanent Method. Retrieved from
+https://www.youtube.com/watch?v=jgM3yHImDR0
+
+StackOverflow forum (2012) StackOverflow. Switching from zsh to bash on OSX, and back again? Retrieved from
+https://stackoverflow.com/questions/10341271/switching-from-zsh-to-bash-on-osx-and-back-again
+
+StackOverflow forum (2016) StackOverflow. Finding Android SDK on Mac and adding to PATH. Retrieved from
+https://stackoverflow.com/questions/34532063/finding-android-sdk-on-mac-and-adding-to-path
+
+QR Code Generator. Create Your QR Code for free. Retrieved from https://www.qr-code-generator.com/
+
+Android developer (2020) Configure on-device developer options. Retrieved from
+https://developer.android.com/studio/debug/dev-options
+
+Samsung Developer. (2020). Android USB Driver for Windows. Retrieved from
+https://developer.samsung.com/mobile/android-usb-driver.html
+
+Java Tutorial Network. (July 31, 2017). Install and configure Android Studio. Retrieved from
+https://javatutorial.net/install-configure-android-studio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
