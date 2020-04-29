@@ -1,6 +1,6 @@
 
-let express = require('express');
-let app = express();
+const express = require('express');
+const app = express();
 
 
 app.get('/api', (req, res) => {
@@ -8,7 +8,7 @@ app.get('/api', (req, res) => {
     res.json([
         {
             id: 1,
-            username: 'DADA'
+            username: 'DADAada'
         },
         {
             id: 2,
