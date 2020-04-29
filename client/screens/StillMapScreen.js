@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 // import { MonoText } from '../components/StyledText';
@@ -25,23 +25,22 @@ class StillMapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentLocationMarkers: {
-        fromMarker: [0, 0],
-        toMarker: [0, 0]
+      currentLocationMarker: {
+        x: "",
+        y: "",
       },
 
-      DistMarkers: {
-        fromMarker: [0, 0],
-        toMarker: [0, 0]
-      },
+      DestX: "25%",
+      DestY: "53.5",
+
 
       focus: {
         coord: [0.0],
         zoom: [0, 0]
       },
 
-      currentZoom: 0,
-      iconZoomedSize:33,
+      currentZoom: 1,
+      iconZoomedSize: 33,
 
     }
   }
@@ -59,60 +58,29 @@ class StillMapScreen extends React.Component {
   }
 
 
-
-
-
-
   render() {
 
+    const { currentZoom } = this.state
 
-    console.log(this.state.currentZoom);
+    const calcZoom = 33 / currentZoom
+
+    const zoomedIconSize = Math.round(calcZoom);
+
+    console.log(zoomedIconSize);
     // this.setState({ iconZoomedSize: 33 / this.state.currentZoom });
     // console.log('icon size', this.state.iconZoomedSize);
 
-
-    return (
-
-      <View style={styles.container}>
-
-        <View style={styles.zoomWrapper}
-        // onTouchStart={(e) => {console.log('touchMove',e.nativeEvent)}}
-        >
-
-          <ReactNativeZoomableView
-            zoomEnabled={true}
-            maxZoom={2}
-            minZoom={1}
-            zoomStep={0.15}
-            initialZoom={1.5}
-            bindToBorders={true}
-            onZoomAfter={this.logOutZoomState}
-            style={styles.zoomableView}
-          >
-            <Ionicons name="ios-rocket" size={33} color="red" style={styles.icon1} />
-            <Ionicons name="ios-pin" size={33} color="brown" style={styles.icon2} />
-
-            <Image
-              style={styles.image}
-              source={require('../assets/images/houstonTunel.jpg')}
-            // resizeMode="stretch"
-            />
-          </ReactNativeZoomableView>
-        </View>
+    // console.log(this.state.DestX[0]);
 
 
 
-        {/* Test Params--------------- */}
-        <Text >Test Zoom Level</Text>
-        {/* <Text >{logOutZoomState()}</Text> */}
-        <Text>{this.state.currentZoom}</Text>
-
-      </View>
-    );
-  }
-}
+/////////////////////////// Style /////////
 
 
+let x = this.statDestX;
+console.log("DestX is ------------:", this.state.DestX)
+// let x = "75%";
+// console.log(this.stat    DestX);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -173,19 +141,20 @@ const styles = StyleSheet.create({
 
   icon2: {
     position: "absolute",
-    top: '53.5%',
-    left: '30%',
+    left: this.state.DestX,
+    // left: x,
+    // left: '25%',
+    top: "53.75%",
+    // left: this.stat    DestX,
+    // top: this.stat   DestY,
     zIndex: 20,
 
   },
 
   testInfo: {
-    fontSize: 87,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-    left: 300,
-    top: 300,
+    fontSize: 12,
+    color: 'black',
+
     zIndex: 100,
   },
 
@@ -195,6 +164,58 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
+
+    //////////////////////////////// end styles
+
+
+    return (
+
+      <View style={styles.container}>
+
+        <View style={styles.zoomWrapper}
+        // onTouchStart={(e) => {console.log('touchMove',e.nativeEvent)}}
+        >
+
+          <ReactNativeZoomableView
+            zoomEnabled={true}
+            maxZoom={2}
+            minZoom={1}
+            zoomStep={0.15}
+            initialZoom={1.5}
+            bindToBorders={true}
+            onZoomAfter={this.logOutZoomState}
+            style={styles.zoomableView}
+          >
+            <Ionicons name="ios-rocket" size={zoomedIconSize} color="red" style={styles.icon1} />
+            <Ionicons name="ios-pin" size={zoomedIconSize} color="brown" style={styles.icon2} />
+
+            <Image
+              style={styles.image}
+              source={require('../assets/images/houstonTunel.jpg')}
+            // resizeMode="stretch"
+            />
+          </ReactNativeZoomableView>
+        </View>
+
+
+
+        {/* Test Params--------------- */}
+        <Text >Test Zoom Level</Text>
+        {/* <Text >{logOutZoomState()}</Text> */}
+        <Text style={styles.testInfo}>Current Zoom:{this.state.currentZoom}</Text>
+        <Text style={styles.testInfo}>DestX:{this.state.DestX}</Text>
+
+        <Button
+          title="Press me"
+          color="#f194ff"
+          onPress={() => Alert.alert('Button with adjusted color pressed, thanks')}
+        />
+
+      </View>
+    );
+  }
+}
 
 
 export default StillMapScreen
