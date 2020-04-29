@@ -4,6 +4,9 @@ import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import MapScreen from '../screens/MapScreen';
+import StillMapScreen from '../screens/StillMapScreen';
+
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -21,17 +24,36 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-american-football" />,
         }}
       />
+
       <BottomTab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          title: 'MapView',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-walk" />,
+        }}
+      />
+
+<BottomTab.Screen
+        name="StillMap"
+        component={StillMapScreen}
+        options={{
+          title: 'StillMap',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-walk" />,
+        }}
+      />
+      
+      {/* <BottomTab.Screen
         name="Links"
         component={LinksScreen}
         options={{
           title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-cellular" />,
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }
