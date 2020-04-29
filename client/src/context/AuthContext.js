@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import createDataContext from './createDataContext'
-import locatorApi from '../api/locator'
+// import locatorApi from '../api/locator'
 import { navigate } from '../navigationRef'
 
 
