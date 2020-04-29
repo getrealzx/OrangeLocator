@@ -13,7 +13,8 @@ import MapView, { Polyline, Marker, Callout } from 'react-native-maps';
 import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 import '../components/_mockLocations';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
-import TabBarIcon from '../components/TabBarIcon';
+// import MapMarker from '../components/MapMarker';
+import { Ionicons } from '@expo/vector-icons';
 
 
 console.disableYellowBox = true;
@@ -23,19 +24,19 @@ class StillMapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentLocationMarkers:{
-        fromMarker:[0,0],
-        toMarker:[0,0]
+      currentLocationMarkers: {
+        fromMarker: [0, 0],
+        toMarker: [0, 0]
       },
 
-      DistMarkers:{
-        fromMarker:[0,0],
-        toMarker:[0,0]
+      DistMarkers: {
+        fromMarker: [0, 0],
+        toMarker: [0, 0]
       },
 
-      focus:{
-        coord:[0.0],
-        zoom:[0,0]
+      focus: {
+        coord: [0.0],
+        zoom: [0, 0]
       }
 
     }
@@ -44,19 +45,17 @@ class StillMapScreen extends React.Component {
 
 
 
+
   render() {
 
-    // const [err, setErr] = useState(null);
-    
 
-    
+
 
     return (
-      // <TabBarIcon focused={focused} name="md-walk" />
 
       <View style={styles.container}>
- 
-         <View style={styles.zoomWrapper}>
+
+        <View style={styles.zoomWrapper}>
           <ReactNativeZoomableView
             zoomEnabled={true}
             maxZoom={2}
@@ -64,16 +63,20 @@ class StillMapScreen extends React.Component {
             zoomStep={0.15}
             initialZoom={1.5}
             bindToBorders={true}
-            onZoomAfter={this.logOutZoomState}
+            // onZoomAfter={this.logOutZoomState}
             style={styles.zoomableView}
           >
+            <Ionicons name="ios-rocket" size={32} color="red" style={styles.icon} />
+
             <Image
               style={styles.image}
               source={require('../assets/images/houstonTunel.jpg')}
-              // resizeMode="stretch"
+            // resizeMode="stretch"
             />
           </ReactNativeZoomableView>
         </View>
+        <Text >{this.lastZoomLevel}</Text>
+
       </View>
     );
   }
@@ -105,14 +108,49 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   image: {
+
+    // position:"absolute",
+    left: 0,
+    top: 0,
+
     flex: 1,
     width: '100%',
     height: '100%',
     // marginBottom: 10,
-        // top:100,
-        // left:40,
+    // top:100,
+    // left:40,
+    zIndex: 0,
 
   },
+
+  icon: {
+
+
+    left: 200,
+    top: 410,
+    zIndex: 10,
+    
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4,
+    // },
+    // shadowOpacity: 0.32,
+    // shadowRadius: 5.46,
+
+    // elevation: 9,
+  },
+
+  testInfo: {
+    fontSize: 87,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 24,
+    textAlign: 'center',
+    left: 300,
+    top: 300,
+    zIndex: 100,
+  },
+
   caption: {
     fontSize: 10,
     color: '#444',
