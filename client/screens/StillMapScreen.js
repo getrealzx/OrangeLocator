@@ -17,6 +17,7 @@ import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/R
 import { Ionicons } from '@expo/vector-icons';
 
 
+
 console.disableYellowBox = true;
 
 
@@ -37,10 +38,26 @@ class StillMapScreen extends React.Component {
       focus: {
         coord: [0.0],
         zoom: [0, 0]
-      }
+      },
+
+      currentZoom: 0,
+      iconZoomedSize:33,
 
     }
   }
+
+  logOutZoomState = (event, gestureState, zoomableViewEventObject) => {
+    // console.log('');
+    // console.log('');
+    // console.log('-------------');
+    // console.log('Event: ', event);
+    // console.log('GestureState: ', gestureState);
+    // console.log('ZoomableEventObject: ', zoomableViewEventObject);
+    // console.log('');
+    // console.log(`Zoomed from ${zoomableViewEventObject.lastZoomLevel} to  ${zoomableViewEventObject.zoomLevel}`);
+    this.setState({ currentZoom: zoomableViewEventObject.zoomLevel });
+  }
+
 
 
 
@@ -49,13 +66,19 @@ class StillMapScreen extends React.Component {
   render() {
 
 
+    console.log(this.state.currentZoom);
+    // this.setState({ iconZoomedSize: 33 / this.state.currentZoom });
+    // console.log('icon size', this.state.iconZoomedSize);
 
 
     return (
 
       <View style={styles.container}>
 
-        <View style={styles.zoomWrapper}>
+        <View style={styles.zoomWrapper}
+        // onTouchStart={(e) => {console.log('touchMove',e.nativeEvent)}}
+        >
+
           <ReactNativeZoomableView
             zoomEnabled={true}
             maxZoom={2}
@@ -63,10 +86,11 @@ class StillMapScreen extends React.Component {
             zoomStep={0.15}
             initialZoom={1.5}
             bindToBorders={true}
-            // onZoomAfter={this.logOutZoomState}
+            onZoomAfter={this.logOutZoomState}
             style={styles.zoomableView}
           >
-            <Ionicons name="ios-rocket" size={32} color="red" style={styles.icon} />
+            <Ionicons name="ios-rocket" size={33} color="red" style={styles.icon1} />
+            <Ionicons name="ios-pin" size={33} color="brown" style={styles.icon2} />
 
             <Image
               style={styles.image}
@@ -75,7 +99,13 @@ class StillMapScreen extends React.Component {
             />
           </ReactNativeZoomableView>
         </View>
-        <Text >{this.lastZoomLevel}</Text>
+
+
+
+        {/* Test Params--------------- */}
+        <Text >Test Zoom Level</Text>
+        {/* <Text >{logOutZoomState()}</Text> */}
+        <Text>{this.state.currentZoom}</Text>
 
       </View>
     );
@@ -123,13 +153,13 @@ const styles = StyleSheet.create({
 
   },
 
-  icon: {
+  icon1: {
 
 
     left: 200,
     top: 410,
     zIndex: 10,
-    
+
     // shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,
@@ -139,6 +169,14 @@ const styles = StyleSheet.create({
     // shadowRadius: 5.46,
 
     // elevation: 9,
+  },
+
+  icon2: {
+    position: "absolute",
+    top: '53.5%',
+    left: '30%',
+    zIndex: 20,
+
   },
 
   testInfo: {
