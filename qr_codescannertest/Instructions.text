@@ -1,4 +1,4 @@
-
+FYI - THESE INSTRUCTIONS REACT NATIVE QR CODE SCANNER FOR iOS & ANDROID ARE A WORK IN PROGRESS.
 
 
 This tutorial divided into several steps:
@@ -60,9 +60,222 @@ yarn add react-native-permissions
 react-native link react-native-qrcode-scanner
 react-native link react-native-permissions
 
+Next, for iOS, open and edit "ios/ReactNativeQrcode/Info.plist" then add these lines before the closing of </dict>.
+
+<key>NSCameraUsageDescription</key>
+    <string>Your message to user when the camera is accessed for the first time</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Your message to user when the microsphone is accessed for the first time</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Your message to user when the photo library is accessed for the first time</string>
+
+Open and edit "ios/Podfile" then add these lines before other pods.
+
+target 'ReactNativeBarcode' do
+  # Permissions
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
+
+  # Pods for ReactNativeBarcode
+  ...
+end
+
+Run this command inside the ios folder to reinstall the Pod.
+
+cd ios
+pod install
+
+If necessary, in the XCode run Product -> Clean Build Folder before running this iOS app to the iOS device.
+Next, for Android, open and edit "android/app/src/main/AndroidManifest.xml" then add this line of permission after other permission.
+
+<uses-permission android:name="android.permission.VIBRATE"/>
 
 
-Sources: 
+
+
+Open and edit "android/app/build.gradle" then add these lines inside the "defaultConfig" block.
+
+android {
+  ...
+  defaultConfig {
+    ...
+    missingDimensionStrategy 'react-native-camera', 'general'
+    missingDimensionStrategy 'react-native-camera', 'mlkit'
+  }
+}
+
+Now, the react-native-qrcode-scanner library is ready to use.
+
+Step #3: Implementing the QRCode Scanner
+
+Open and edit "App.js" then add or replace these imports of required React Native elements, useState (we are using React Hooks),
+and QRCodeScanner (react-native-qrcode-scanner) library.
+
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+  Button
+} from 'react-native';
+
+import {
+  Header,
+  Colors,
+} from 'react-native/Libraries/NewAppScreen';
+
+import QRCodeScanner from 'react-native-qrcode-scanner';
+
+
+Modify the App constant to be like this.
+
+const App = () => {
+...
+}
+
+Add the variables inside the App constant for show/hide the result and show/hide the QRCode scanner.
+
+const [scan, setScan] = useState(false)
+const [result, setResult] = useState()
+
+Add the functions after those variables to handle the scan result and activate or start scan action.
+
+onSuccess = (e) => {
+    setResult(e.data)
+    setScan(false)
+  }
+
+  startScan = () => {
+    setScan(true)
+    setResult()
+  }
+
+Modify the render by replacing the default render with this.
+
+return (
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Header />
+          <View style={styles.body}>
+            { result &&
+              <View style={styles.sectionContainer}>
+                <Text style={styles.centerText}>{result}</Text>
+              </View>
+            }
+            { !scan &&
+              <View style={styles.sectionContainer}>
+                <Button
+                  title="Start Scan"
+                  color="#f194ff"
+                  onPress={this.startScan}
+                />
+              </View>
+            }
+            { scan &&
+              <View style={styles.sectionContainer}>
+                <QRCodeScanner
+                  reactivate={true}
+                  showMarker={true}
+                  ref={(node) => { this.scanner = node }}
+                  onRead={this.onSuccess}
+                  topContent={
+                    <Text style={styles.centerText}>
+                      Scan your QRCode!
+                    </Text>
+                  }
+                  bottomContent={
+                    <TouchableOpacity style={styles.buttonTouchable} onPress={() => setScan(false)}>
+                      <Text style={styles.buttonText}>Cancel Scan</Text>
+                    </TouchableOpacity>
+                  }
+                />
+              </View>
+            }
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
+  );
+
+
+Finally, modify the styles to be like this.
+
+const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: Colors.lighter,
+  },
+  body: {
+    backgroundColor: Colors.white,
+  },
+  sectionContainer: {
+    marginTop: 32,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.black,
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+    color: Colors.dark,
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  footer: {
+    color: Colors.dark,
+    fontSize: 12,
+    fontWeight: '600',
+    padding: 4,
+    paddingRight: 12,
+    textAlign: 'right',
+  },
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
+});
+
+Step #4: Run and Test the React Native QRCode Scanner
+Before running to the iOS or Android devices, make sure the devices are connected to your computer. Next, run the React Native app
+to the iOS device inside the XCode after opening the "ios/ReactNativeQrcode.xcworkspace" and the device exists in the XCode toolbar. 
+Make sure you have chosen your Development Team in the Build Settings.
+
+To run to the Android device, type this command in the terminal.
+npx react-native run-android
+
+When a new terminal window opened, go to the React Native project folder then run the Metro bundler server.
+cd ~/Apps/ReactNativeQrcode && yarn start
+
+At this time the app will launch on the iPhone/iPad.
+
+Refer to the GitHub for the source code, https://github.com/didinj/react-native-qrcode-scanner-example
+
+
+Sources and References for instructions, trouble shooting, etc...: 
 
 Didin J. (April 1, 2020) DJAMware.com.  React Native Tutorial: QRCode Scanner App for Android or iOS. Retrieved from 
 https://www.djamware.com/post/5e83f1e7344bef67e448798c/react-native-tutorial-qrcode-scanner-app-for-android-or-ios
@@ -95,6 +308,13 @@ https://developer.samsung.com/mobile/android-usb-driver.html
 
 Java Tutorial Network. (July 31, 2017). Install and configure Android Studio. Retrieved from
 https://javatutorial.net/install-configure-android-studio
+
+Kelly Rose (Oct. 20, 2017) React Native iOS Splash Screen Using Xcode Launch Screen. Retrieved from
+https://medium.com/@kelleyannerose/react-native-ios-splash-screen-in-xcode-bd53b84430ec
+
+Jan Vaclavik (Sept. 10, 2019) Change splash screen in iOS app for dummies (the better way). Retrieved from
+https://medium.com/flawless-app-stories/change-splash-screen-in-ios-app-for-dummies-the-better-way-e385327219e
+
 
 
 
