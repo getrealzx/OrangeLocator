@@ -30,8 +30,9 @@ const switchNavigator = createSwitchNavigator({
       SearchResults: SearchResultsScreen,
       Map: MapScreen,
       ManualUpdate: ManualUpdateScreen,
-      DigitalCode: DigitalCodeScreen
     }),
+    DigitalCode: DigitalCodeScreen,
+    ManualUpdate: ManualUpdateScreen,
     Account: AccountScreen
   })
 });

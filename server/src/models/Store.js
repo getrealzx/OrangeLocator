@@ -18,4 +18,4 @@ const locationSchema = new mongoose.Schema({
     locations: [coordSchema]
 })
 
-mongoose.model('Store', locationSchema);
+module.exports = mongoose.model('Store', locationSchema);
