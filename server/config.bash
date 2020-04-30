@@ -1,0 +1,1 @@
+sequelize model:generate --name site_info --attributes site_name:string,center_coords:string,info_id:string
