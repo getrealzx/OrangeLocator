@@ -1,17 +1,17 @@
 require('./models/User');
-// require('./models/Store');
+require('./models/Store');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
-// const trackRoutes = require('./routes/trackRoutes');
+const storeList = require('./handlers/storeList');
 const requireAuth = require('./middlewares/requireAuth');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(authRoutes);
-// app.use(trackRoutes);
+app.use(storeList);
 
 const mongoUri = 'mongodb+srv://diego13:Jean2019$@orangecluster-qzqax.mongodb.net/test?retryWrites=true&w=majority';
 if (!mongoUri) {
@@ -21,7 +21,8 @@ if (!mongoUri) {
     }
     mongoose.connect(mongoUri, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
     });
     mongoose.connection.on('connected', () => {
     console.log('Connected to mongo instance');

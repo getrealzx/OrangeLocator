@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native'
 import createDataContext from './createDataContext'
-import locatorApi from '../api/locator'
+import axios from 'axios'
 import { navigate } from '../navigationRef'
+axios.defaults.baseURL="http://localhost:3000"
 
 
 const authReducer = (state, action) => {
@@ -35,7 +36,7 @@ const clearErrorMessage = dispatch => () => {
 
 const signup = (dispatch) => async ({ email, password }) =>{
         try{
-            const response = await locatorApi.post('/signup', {email, password})
+            const response = await axios.post('/signup', {email, password})
             await AsyncStorage.setItem('token', response.data.token);
             dispatch({ type: 'signin', payload: response.data.token})
 
@@ -53,7 +54,7 @@ const signup = (dispatch) => async ({ email, password }) =>{
 
 const signin = (dispatch) => async ({ email, password }) =>{
         try{
-            const response = await locatorApi.post('/signin', { email, password })
+            const response = await axios.post('/signin', { email, password })
             await AsyncStorage.setItem('token', response.data.token)
             dispatch({ type: 'signin', payload: response.data.token})
             navigate('ChooseSite')
