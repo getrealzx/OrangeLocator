@@ -26,6 +26,21 @@ class MapScreen extends React.Component {
         longitudeDelta: 0.0121,
       },
 
+      markers: [{
+        title: 'start',
+        coordinates: {
+          latitude: 29.756295,
+          longitude: -95.362869
+        },
+      },
+      {
+        title: 'end',
+        coordinates: {
+          latitude: 29.756290,
+          longitude: -95.362874
+        },
+      }]
+
     }
   }
 
@@ -98,17 +113,20 @@ class MapScreen extends React.Component {
             }}
           >
 
-            <Polyline coordinates={points} />
+            <Polyline coordinates={points}
+              strokeColo={"orange"}
+              strokeWidth={5}
 
-            <Marker
-              coordinate={{ latitude: 29.756290, longitude: -95.364857 }}
+            />
 
-            >
-   
-              <Callout>
-                <Image source={require('../assets/images/robot-prod.png')}></Image>
-              </Callout>
-            </Marker>
+            {this.state.markers.map(marker => (
+              <MapView.Marker
+                coordinate={marker.coordinates}
+                title={marker.title}
+              />
+            ))}
+
+
 
 
           </MapView>

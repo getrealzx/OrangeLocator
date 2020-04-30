@@ -17,7 +17,6 @@ import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/R
 import { Ionicons } from '@expo/vector-icons';
 
 
-
 console.disableYellowBox = true;
 
 
@@ -25,19 +24,14 @@ class StillMapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentLocationMarker: {
-        x: "",
-        y: "",
-      },
+      currentX: 100,
+      currentY: 300,
 
-      DestX: "25%",
-      DestY: "53.5",
+      destX: "50%",
+      destY: "60%",
 
-
-      focus: {
-        coord: [0.0],
-        zoom: [0, 0]
-      },
+      focusX: 0,
+      focusY: 0,
 
       currentZoom: 1,
       iconZoomedSize: 33,
@@ -58,14 +52,20 @@ class StillMapScreen extends React.Component {
   }
 
 
+  onLayout = (e) => {
+    this.setState({
+      width: Math.round(e.nativeEvent.layout.width),
+      height: Math.round(e.nativeEvent.layout.height),
+      x: e.nativeEvent.layout.x,
+      y: e.nativeEvent.layout.y,
+    })
+  }
+
+
   render() {
 
     const { currentZoom } = this.state
-
-    const calcZoom = 33 / currentZoom
-
-    const zoomedIconSize = Math.round(calcZoom);
-
+    const zoomedIconSize = Math.round(33 / currentZoom);
     console.log(zoomedIconSize);
     // this.setState({ iconZoomedSize: 33 / this.state.currentZoom });
     // console.log('icon size', this.state.iconZoomedSize);
@@ -74,96 +74,117 @@ class StillMapScreen extends React.Component {
 
 
 
-/////////////////////////// Style /////////
+    /////////////////////////// Style /////////
+    // let testX= (this.state.destX/this.state.width*100*1.5).toFixed(2)+"%";
+    // let testX= Math.round(this.state.destX/this.state.width*10000/1.5)/100;
+    // let testX= Math.round(this.state.destX*this.state.width/1321);
+    // let testY= (this.state.height-this.state.destY).toFixed(2)+"%";
+    // let testY= (this.state.destY/((1600-this.state.height)/2+this.state.height)).toString()+"%";
 
 
-let x = this.statDestX;
-console.log("DestX is ------------:", this.state.DestX)
-// let x = "75%";
-// console.log(this.stat    DestX);
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#e7e7e7',
-  },
-  header: {
-    backgroundColor: '#5569ff',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-
-  },
-  title: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  zoomWrapper: {
-    flex: 1,
-    overflow: 'hidden',
-  },
-  zoomableView: {
-    padding: 10,
-    backgroundColor: '#000',
-  },
-  image: {
-
-    // position:"absolute",
-    left: 0,
-    top: 0,
-
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    // marginBottom: 10,
-    // top:100,
-    // left:40,
-    zIndex: 0,
-
-  },
-
-  icon1: {
+    //from center: (% of dis on vh )*vh = (1/2-destX)*totalheight
+    //from center: (1/2-%vh from top)vh =  (1/2-destX)*totalheight
+    //from center: (1/2-%vh from top)=  (1/2-destX)*totalheight)/vh
+    //%vhfromTop=1/2-(1/2-destX)*totalheight)/vh;
+    // let PctVHfromTop = ((1 / 2 - (((1 / 2 - this.state.destY) * 1600) / this.state.height)) * 100).toString() + "%";
 
 
-    left: 200,
-    top: 410,
-    zIndex: 10,
 
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 4,
-    // },
-    // shadowOpacity: 0.32,
-    // shadowRadius: 5.46,
+    // let testY= (1-this.state.destY)*this.state.height)/1599)/this.state.height*100).toString() + "%";
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: '#e7e7e7',
+      },
+      header: {
+        backgroundColor: '#5569ff',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
 
-    // elevation: 9,
-  },
+      },
+      title: {
+        color: '#fff',
+        fontSize: 20,
+      },
+      zoomWrapper: {
+        flex: 1,
+        overflow: 'hidden',
+      },
+      zoomableView: {
 
-  icon2: {
-    position: "absolute",
-    left: this.state.DestX,
-    // left: x,
-    // left: '25%',
-    top: "53.75%",
-    // left: this.stat    DestX,
-    // top: this.stat   DestY,
-    zIndex: 20,
+      },
+      image: {
 
-  },
+        // position:"absolute",
+        // left: 0,
+        // top: 0,
+        justifyContent: 'center',
 
-  testInfo: {
-    fontSize: 12,
-    color: 'black',
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        // width: '100%',
+        // height: '100%',
+        zIndex: 0,
 
-    zIndex: 100,
-  },
+      },
 
-  caption: {
-    fontSize: 10,
-    color: '#444',
-    alignSelf: 'center',
-  },
-});
+      currentLocationMaker: {
+
+
+        left: this.state.currentX,
+        top: this.state.currentY,
+        zIndex: 10,
+
+
+   
+      },
+
+      destMaker: {
+        position: "absolute",
+        // left: testX,
+        // left: x,
+        // left: '25%',
+        top: this.state.destY,
+        // top:100,
+        // top: testY,
+        // top: this.state.convertedY,
+        left: this.state.destX,
+        // top: this.stat   destY,
+        zIndex: 20,
+
+
+        borderColor:"white",
+      },
+
+      testInfo: {
+        fontSize: 12,
+        color: 'black',
+
+        zIndex: 100,
+      },
+
+      caption: {
+        fontSize: 10,
+        color: '#444',
+        alignSelf: 'center',
+      },
+
+      compass: {
+        position: "absolute",
+        top: "5%",
+        right: "5%",
+        elevation:5,
+        backgroundColor: "white",
+        borderRadius:30,
+        paddingLeft:4,
+        paddingRight:4,
+      }
+    });
+
+
+    //////////////////shadow
 
 
     //////////////////////////////// end styles
@@ -173,7 +194,7 @@ const styles = StyleSheet.create({
 
       <View style={styles.container}>
 
-        <View style={styles.zoomWrapper}
+        <View style={styles.zoomWrapper} onLayout={this.onLayout}
         // onTouchStart={(e) => {console.log('touchMove',e.nativeEvent)}}
         >
 
@@ -182,13 +203,19 @@ const styles = StyleSheet.create({
             maxZoom={2}
             minZoom={1}
             zoomStep={0.15}
-            initialZoom={1.5}
+            initialZoom={1.8}
             bindToBorders={true}
             onZoomAfter={this.logOutZoomState}
+            initialOffsetX={40}
             style={styles.zoomableView}
           >
-            <Ionicons name="ios-rocket" size={zoomedIconSize} color="red" style={styles.icon1} />
-            <Ionicons name="ios-pin" size={zoomedIconSize} color="brown" style={styles.icon2} />
+
+
+            <Ionicons name="ios-rocket" size={32} color="red" style={styles.currentLocationMaker} />
+
+            <Ionicons name="ios-pin" size={32} color="brown" style={styles.destMaker} />
+
+
 
             <Image
               style={styles.image}
@@ -196,6 +223,11 @@ const styles = StyleSheet.create({
             // resizeMode="stretch"
             />
           </ReactNativeZoomableView>
+  
+
+            <Ionicons name="ios-compass" size={50} color="red" style={styles.compass} />
+
+
         </View>
 
 
@@ -204,11 +236,17 @@ const styles = StyleSheet.create({
         <Text >Test Zoom Level</Text>
         {/* <Text >{logOutZoomState()}</Text> */}
         <Text style={styles.testInfo}>Current Zoom:{this.state.currentZoom}</Text>
-        <Text style={styles.testInfo}>DestX:{this.state.DestX}</Text>
+        <Text style={styles.testInfo}>DestX:{this.state.destX}</Text>
+        <Text>view width: {this.state.width}</Text>
+        <Text>view height: {this.state.height}</Text>
+        {/* <Text>TestX: {testX}</Text>
+        <Text>TestY: {testY}</Text> */}
+        {/* <Text>Percent from Top {PctVHfromTop}</Text> */}
+
 
         <Button
-          title="Press me"
-          color="#f194ff"
+          title="Update Your Location"
+          color="green"
           onPress={() => Alert.alert('Button with adjusted color pressed, thanks')}
         />
 
