@@ -26,7 +26,7 @@ const SignupScreen = ({ navigation }) => {
             />
             <NavLink
             routeName="Map"
-            text="Go to Map"
+            text="Go to Map without signing up"
             />
         </View>
     )

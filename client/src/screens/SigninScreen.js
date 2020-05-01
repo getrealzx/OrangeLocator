@@ -23,7 +23,7 @@ const SigninScreen = () => {
             />
             <NavLink
             routeName="Map"
-            text="Go to Map"
+            text="Go to Map without signing in"
             />
         </View>
     )
